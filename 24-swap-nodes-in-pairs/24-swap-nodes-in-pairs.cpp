@@ -20,7 +20,6 @@ public:
         head = p2;
         
         while (p1->next != nullptr) {
-            cout << "swap" << endl;
             p1->next = p2->next;
             p2->next = p1;
             ListNode *p1_new = p1->next;

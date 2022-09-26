@@ -67,17 +67,8 @@ public:
             return mergeLists(lists[0], lists[1]);
         }
         
-        vector<ListNode*> left;
-        vector<ListNode*> right;
-        
-        for (int i = 0; i < N; i++) {
-            if (i < N/2) {
-                left.push_back(lists[i]);
-            }
-            else {
-                right.push_back(lists[i]);
-            }
-        }
+        vector<ListNode*> left(lists.begin(), lists.begin() + N/2);
+        vector<ListNode*> right(lists.begin() + N/2, lists.end());
         
         return mergeLists(mergeKLists(left), mergeKLists(right));
     }

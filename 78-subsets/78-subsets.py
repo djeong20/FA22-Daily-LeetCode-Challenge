@@ -1,19 +1,21 @@
 class Solution:
-    def recursive(self, nums, res):
+    def recursive(self, nums, res, s):
         if len(nums) <= 1:
             return
         
         for x in range(len(nums)):
             l = nums[:x] + nums[x+1:]
-            if l not in res:
+            t = tuple(l)
+
+            if t not in s:
                 res.append(l)
-                self.recursive(l, res)
+                s.add(t)
+                self.recursive(l, res, s)
         
-    
     def subsets(self, nums: List[int]) -> List[List[int]]:
-        
         res = [[], nums]
-        self.recursive(nums, res)
+        s = set(tuple(nums))
+        self.recursive(nums, res, s)
         
         return res
         

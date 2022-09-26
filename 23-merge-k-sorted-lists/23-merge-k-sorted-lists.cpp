@@ -10,6 +10,7 @@
  */
 class Solution {
 public:
+    // Merge two sorted Linked Lists
     ListNode* mergeLists(ListNode* l1, ListNode* l2) {
         if (l1 == nullptr) {
             return l2;
@@ -51,13 +52,14 @@ public:
         return head;
     }
     
+    // Recursive solution (Merge Sort)
     ListNode* mergeKLists(vector<ListNode*>& lists) {
         int N = lists.size();
         
+        // Base cases
         if (N == 0) {
             return nullptr;
         }
-        
         if (N == 1) {
             return lists[0];
         }

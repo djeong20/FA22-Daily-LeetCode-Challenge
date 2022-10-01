@@ -7,6 +7,10 @@ public:
         
         int n = nums.size();
         
+        if (n == 1) {
+            return nums[0];
+        }
+        
         for (int i = 0; i < n; i++) {
             int val = nums[i];
             
@@ -18,11 +22,10 @@ public:
             }
             else {
                 itr->second += 1;
-            }
-            
-            itr = dict.find(val);
-            if (itr->second > n/2) {
-                return itr->first;
+                
+                if (itr->second > n/2) {
+                    return itr->first;
+                }
             }
             
             

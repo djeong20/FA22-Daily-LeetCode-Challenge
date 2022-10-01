@@ -19,6 +19,7 @@ public:
             else {
                 itr->second += 1;
             }
+            
             itr = dict.find(val);
             if (itr->second > n/2) {
                 return itr->first;

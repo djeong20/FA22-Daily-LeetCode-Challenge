@@ -22,7 +22,7 @@ public:
         TreeNode *node = nullptr;
         q.push(root);
         
-        bool reverse = false;
+        bool rev = false;
         
         while (!q.empty()) {
             int s = q.size();
@@ -32,17 +32,17 @@ public:
                 node = q.front();
                 q.pop();
                 
-                if (reverse) {
-                    v.insert(v.begin(), node->val);
-                } else{
-                    v.push_back(node->val);    
-                }
+                
+                v.push_back(node->val);    
+                
                 
                 if (node->left) q.push(node->left);
                 if (node->right) q.push(node->right);                
             }
-            
-            reverse = !reverse;
+            if (rev) {
+                std::reverse(v.begin(), v.end());
+            }
+            rev = !rev;
             res.push_back(v);
         }
         

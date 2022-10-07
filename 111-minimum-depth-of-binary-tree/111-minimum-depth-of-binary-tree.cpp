@@ -14,9 +14,29 @@ public:
     int minDepth(TreeNode* root) {
         if (root == nullptr) return 0;
         
-        if (root->left == nullptr && root->right == nullptr) return 1;
-        else if (root->left != nullptr && root->right == nullptr) return minDepth(root->left) + 1;
-        else if (root->left == nullptr && root->right != nullptr) return minDepth(root->right) + 1;
-        else return std::min(minDepth(root->left), minDepth(root->right)) + 1;
+        std::queue<TreeNode *> q;
+        q.push(root);
+        
+        TreeNode *n = nullptr;
+        int depth = 1;
+        int len;
+        
+        while (!q.empty()) {            
+            len = q.size();
+            
+            for (int i = 0; i < len; i++) {
+                n = q.front();
+                q.pop();
+                
+                if (n->left == nullptr && n->right == nullptr) {
+                    return depth;
+                }
+                if (n->left) q.push(n->left);
+                if (n->right) q.push(n->right);
+            }
+            depth++;
+            
+        }
+        return depth;
     }
 };

@@ -15,22 +15,17 @@ public:
     
     void dfs(TreeNode *node, int level) {
         if (node == nullptr) return;
-        
-        if (res.size() == level) {
-            res.push_back(vector<int>());
-        }
-        
-        res[level].push_back(node->val);
+        if (res.size() == level) res.push_back(vector<int>());
         
         dfs(node->left, level+1);
         dfs(node->right, level+1);
+        
+        res[level].push_back(node->val);
     }
     
     vector<vector<int>> levelOrderBottom(TreeNode* root) {
         dfs(root, 0);
-        
-        std::reverse(res.begin(), res.end());
-        
+        reverse(res.begin(), res.end());
         return res;
     }
 };

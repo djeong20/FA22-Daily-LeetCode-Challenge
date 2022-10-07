@@ -11,25 +11,33 @@
  */
 class Solution {
 public: 
-    vector<vector<int>> res;
-    
-    void recursiveLevelOrder(TreeNode* node, int level) {
-        if (node == nullptr) {
-            return;
-        }
-        
-        if (res.size() == level) {
-            res.push_back(vector<int>());
-        }
-        res[level].push_back(node->val);
-        
-        recursiveLevelOrder(node->left, level+1);
-        recursiveLevelOrder(node->right, level+1);
-    }
-    
     vector<vector<int>> levelOrder(TreeNode* root) {
-        recursiveLevelOrder(root, 0);
+        vector<vector<int>> res;
+        std::queue<std::pair<TreeNode *, int>> q;
+        q.push({root, 0});
+        
+        while (!q.empty()) {
+            TreeNode *node = q.front().first;
+            int level = q.front().second;
+            q.pop();
+            
+            if (node == nullptr) {
+                continue;
+            }
+            
+            if (res.size() == level) {
+                res.push_back(vector<int>());
+            }
+            
+            res[level].push_back(node->val);
+            
+            if (node != nullptr) {
+                q.push({node->left, level+1});
+                q.push({node->right, level+1});
+            }
+        }
         
         return res;
+        
     }
 };

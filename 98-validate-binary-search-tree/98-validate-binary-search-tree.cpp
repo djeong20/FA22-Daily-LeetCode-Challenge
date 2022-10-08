@@ -11,11 +11,27 @@
  */
 class Solution {
 public:
-    bool isValidBST(TreeNode* root, TreeNode *left=nullptr, TreeNode *right=nullptr) {
-        if (root == nullptr) return true;
-        if (left && left->val >= root->val) return false;
-        if (right && right->val <= root->val) return false;
+    bool inorderTraversal(TreeNode* node, vector<int> &nums) {
+        if (node == nullptr) {
+            return true;
+        }
         
-        return isValidBST(root->left, left, root) && isValidBST(root->right, root, right);
+        bool l = inorderTraversal(node->left, nums);
+        
+        int n = nums.size();
+        if (n > 0 && nums[n-1] >= node->val) {
+            return false;
+        }
+        
+        nums.push_back(node->val);
+        
+        bool r = inorderTraversal(node->right, nums);
+        
+        return l && r;
+    }
+    
+    bool isValidBST(TreeNode* root) {
+        vector<int> nums;
+        return inorderTraversal(root, nums);
     }
 };

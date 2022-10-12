@@ -11,6 +11,9 @@ public:
             for (int j = 1; j <= nums[i] and (i+j) < n; j++) {
                 dp[i+j] = min(dp[i+j], dp[i]+1);
             }
+            if (dp[n-1] != INT_MAX-1) {
+                return dp[n-1];
+            }
         }
         return dp[n-1];
     }

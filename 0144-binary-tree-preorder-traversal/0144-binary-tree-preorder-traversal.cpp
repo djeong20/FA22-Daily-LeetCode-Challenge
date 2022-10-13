@@ -11,17 +11,22 @@
  */
 class Solution {
 public:
-    void recursiveTraversal(TreeNode* node, vector<int> &res) {
-        if (node) {
-            res.push_back(node->val);
-            recursiveTraversal(node->left, res);
-            recursiveTraversal(node->right, res);
-        }
-    }
-    
     vector<int> preorderTraversal(TreeNode* root) {
         std::vector<int> res;
-        recursiveTraversal(root, res);
+        if (root == nullptr) return res;
+        
+        std::stack<TreeNode *> st;
+        st.push(root);
+        TreeNode *curr = nullptr;
+        
+        while (!st.empty()) {
+            curr = st.top();
+            res.push_back(curr->val);
+            st.pop();
+            
+            if (curr->right) st.push(curr->right);
+            if (curr->left) st.push(curr->left);
+        }
         
         return res;
     }

@@ -1,53 +1,43 @@
-#include <mutex>
-#include <condition_variable>
-
 class Foo {
 private:
-    bool firstProcessed;
-    bool secondProcessed;
-    std::mutex m;
-    std::condition_variable cv;
-    
+    std::mutex _q_m;
+    std::condition_variable _cv;
+    bool firstFinished = false;
+    bool secondFinished = false;
 public:
-    Foo() {
-        firstProcessed = false;
-        secondProcessed = false;
-    }
+    Foo() {}
 
     void first(function<void()> printFirst) {
-        std::unique_lock<std::mutex> lck(m);
-        
+        std::unique_lock<std::mutex> lock(this->_q_m);
         // printFirst() outputs "first". Do not change or remove this line.
         printFirst();
-        firstProcessed = true;
-        lck.unlock();
-        cv.notify_all();
+        firstFinished = true;
+        lock.unlock();
+        _cv.notify_all();
     }
 
     void second(function<void()> printSecond) {
-        std::unique_lock<std::mutex> lck(m);
+        std::unique_lock<std::mutex> lock(this->_q_m);
         
-        while (!firstProcessed) {
-            cv.wait(lck);
+        while (!firstFinished) {
+            _cv.wait(lock);
         }
         
         // printSecond() outputs "second". Do not change or remove this line.
         printSecond();
-        secondProcessed = true;
-        lck.unlock();
-        cv.notify_all();
+        secondFinished = true;
+        lock.unlock();
+        _cv.notify_all();
     }
 
     void third(function<void()> printThird) {
-        std::unique_lock<std::mutex> lck(m);
+        std::unique_lock<std::mutex> lock(this->_q_m);
         
-        while (!secondProcessed) {
-            cv.wait(lck);
+        while (!secondFinished) {
+            _cv.wait(lock);
         }
-        
         // printThird() outputs "third". Do not change or remove this line.
         printThird();
-        lck.unlock();
-        cv.notify_all();
+        lock.unlock();
     }
 };

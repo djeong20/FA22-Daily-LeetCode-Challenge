@@ -29,10 +29,10 @@ public:
                 node = q.front();
                 q.pop();
                 
-                if (i == 0) res = node->val;
+                res = node->val;
                 
-                if (node->left != nullptr) q.push(node->left);
                 if (node->right != nullptr) q.push(node->right);
+                if (node->left != nullptr) q.push(node->left);
             }
         }
         

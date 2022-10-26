@@ -15,8 +15,11 @@ def findTwoSum(node, k, visited):
         return True
 
     visited.add(node.val)
-
-    return findTwoSum(node.left, k, visited) or findTwoSum(node.right, k, visited)
+    
+    if target > node.val:
+        return findTwoSum(node.right, k, visited) or findTwoSum(node.left, k, visited)
+    else:
+        return findTwoSum(node.left, k, visited) or findTwoSum(node.right, k, visited)
 
 class Solution:
     def findTarget(self, root: Optional[TreeNode], k: int) -> bool:    

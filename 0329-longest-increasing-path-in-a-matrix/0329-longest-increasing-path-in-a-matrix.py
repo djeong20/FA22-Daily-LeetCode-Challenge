@@ -17,32 +17,24 @@ class Solution:
         m, n = len(matrix), len(matrix[0])
         directions = [(0, -1), (0, 1), (-1, 0), (1, 0)]
         
-        p_matrix = [[0]*n for _ in range(m)]        
+        dp = [[0] * n for _ in range(m)]        
         
-        def dfs(r, c, matrix, p_matrix, visited):
-            res = 1
+        def dfs(r, c):
+            if not dp[r][c]:
+                dp[r][c] = 1
+                for dr, dc in directions:
+                    nr, nc = r+dr, c+dc
+
+                    if 0 <= nr < m and 0 <= nc < n and (nr, nc) and matrix[r][c] < matrix[nr][nc]:
+                        
+                        dp[r][c] = max(dp[r][c], dfs(nr, nc)+1)
             
-            visited.add((r, c))
-            
-            for dr, dc in directions:
-                nr, nc = r+dr, c+dc
-                
-                if 0 <= nr < m and 0 <= nc < n and (nr, nc) not in visited and matrix[r][c] < matrix[nr][nc]:
-                    if p_matrix[nr][nc] != 0:
-                        res = max(res, p_matrix[nr][nc]+1)
-                    else:
-                        res = max(res, dfs(nr, nc, matrix, p_matrix, visited.copy())+1)
-                
-            p_matrix[r][c] = res
-            
-            return p_matrix[r][c]
+            return dp[r][c]
         
         maxVal = 0
         for r in range(m):
             for c in range(n):
-                v = dfs(r, c, matrix, p_matrix, set())
+                v = dfs(r, c)
                 maxVal = max(v, maxVal)
-        
-        print(p_matrix)
         
         return maxVal

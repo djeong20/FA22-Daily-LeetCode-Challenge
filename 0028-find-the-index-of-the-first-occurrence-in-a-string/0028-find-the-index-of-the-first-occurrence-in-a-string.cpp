@@ -1,8 +1,6 @@
 class Solution {
 public:
     bool scanMatch(string haystack, string needle, int index, int n, int nn) {    
-        if (index + nn > n) return false;
-        
         for (int i = 0; i < nn; ++i) {
             if (haystack[index+i] != needle[i]) return false;
         }
@@ -14,7 +12,7 @@ public:
         int n = haystack.size();
         int nn = needle.size();
         
-        for (int i = 0; i < n; ++i) {
+        for (int i = 0; i <= n-nn; ++i) {
             if (haystack[i] == needle[0] && scanMatch(haystack, needle, i, n, nn)) {
                 return i;
             }

@@ -1,11 +1,9 @@
 class Solution {
 public:
-    bool scanMatch(string haystack, string needle, int index) {
-        int N = needle.size();
+    bool scanMatch(string haystack, string needle, int index, int n, int nn) {    
+        if (index + nn > n) return false;
         
-        if (index + N > haystack.size()) return false;
-        
-        for (int i = 0; i < N; ++i) {
+        for (int i = 0; i < nn; ++i) {
             if (haystack[index+i] != needle[i]) return false;
         }
         
@@ -16,11 +14,8 @@ public:
         int n = haystack.size();
         int nn = needle.size();
         
-        int idx = 0;
-        int startIdx = 0;
-        
-        for (int i = 0; i < n; i++) {
-            if (haystack[i] == needle[idx] && scanMatch(haystack, needle, i)) {
+        for (int i = 0; i < n; ++i) {
+            if (haystack[i] == needle[0] && scanMatch(haystack, needle, i, n, nn)) {
                 return i;
             }
         }
